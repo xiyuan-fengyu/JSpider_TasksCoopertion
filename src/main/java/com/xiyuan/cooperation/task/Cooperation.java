@@ -24,7 +24,8 @@ public class Cooperation {
         return result.getAsJsonArray();
     }
 
-    @OnMessage(name = "获取一个视屏的信息", fromQueue = "bilibili_videos", js = "js/VideoInfo.js", parallel = 2, timeout = 30)
+    //早上6:30设置并行数为5，凌晨0:30设置并行数为10
+    @OnMessage(name = "获取一个视屏的信息", fromQueue = "bilibili_videos", js = "js/VideoInfo.js", parallelConfig = "{'0 30 6 * * ? ': 5, '0 30 0 * * ? ': 10}", timeout = 30)
     public void videoInfo(String url, JsonElement result) {
         JsonObject videoInfo = result.getAsJsonObject();
 
